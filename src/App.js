@@ -9,7 +9,8 @@
 
 // Face Mesh - https://github.com/tensorflow/tfjs-models/tree/master/facemesh
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
+// import BrowSwitcher from "./BrowSwitcher"
 import "./App.css";
 import * as tf from "@tensorflow/tfjs";
 // OLD MODEL
@@ -18,9 +19,12 @@ import * as tf from "@tensorflow/tfjs";
 // NEW MODEL
 import * as facemesh from "@tensorflow-models/face-landmarks-detection";
 import Webcam from "react-webcam";
-import { drawMesh } from "./utilities";
+import { drawMesh, drawEyesOutline, drawEyeBrowsOutline } from "./utilities";
+
 
 function App() {
+  const [browColor, setBrowColor] = useState("blue");
+
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
 
@@ -62,18 +66,31 @@ function App() {
       //       const face = await net.estimateFaces(video);
       // NEW MODEL
       const face = await net.estimateFaces({input:video});
-      console.log(face);
-
+      // console.log(face);
+      
       // Get canvas context
       const ctx = canvasRef.current.getContext("2d");
-      requestAnimationFrame(()=>{drawMesh(face, ctx)});
+      // requestAnimationFrame(()=>{drawMesh(face, ctx)});
+      // requestAnimationFrame(()=>{drawEyesOutline(face, ctx)});
+      requestAnimationFrame(()=>{
+        console.log("Augenbrauen zeichnen in ", browColor)
+        drawEyeBrowsOutline(face, ctx, browColor)
+      });
     }
   };
 
   useEffect(()=>{runFacemesh()}, []);
+  useEffect(()=>{
+    // setBrowColor
+    console.log("useEffect, brow color:", browColor)
+  }, [browColor]);
 
   return (
     <div className="App">
+      <div>
+        <button onClick={() => setBrowColor("green")}>grün</button>
+        <button onClick={() => setBrowColor("pink")}>pink</button>
+      </div>
       <header className="App-header">
         <Webcam
           ref={webcamRef}

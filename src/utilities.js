@@ -2689,3 +2689,58 @@ export const drawMesh = (predictions, ctx) => {
     });
   }
 };
+
+export const drawEyesOutline = (predictions, ctx) => {
+  ctx.fillStyle = "red";
+  if(predictions.length > 0) {
+      predictions.forEach(prediction => {
+          const rightEyeUpper0 = prediction.annotations.rightEyeUpper0;
+          const rightEyeLower0 = prediction.annotations.rightEyeLower0;
+          const rightEyeUpper1 = prediction.annotations.rightEyeUpper1;
+          const rightEyeLower1 = prediction.annotations.rightEyeLower1;
+          const rightEyeUpper2 = prediction.annotations.rightEyeUpper2;
+          const rightEyeLower2 = prediction.annotations.rightEyeLower2;
+          const rightEyeLower3 = prediction.annotations.rightEyeLower3;
+          const leftEyeUpper0 = prediction.annotations.leftEyeUpper0;
+          const leftEyeLower0 = prediction.annotations.leftEyeLower0;
+          const leftEyeUpper1 = prediction.annotations.leftEyeUpper1;
+          const leftEyeLower1 = prediction.annotations.leftEyeLower1;
+          const leftEyeUpper2 = prediction.annotations.leftEyeUpper2;
+          const leftEyeLower2 = prediction.annotations.leftEyeLower2;
+          const leftEyeLower3 = prediction.annotations.leftEyeLower3;
+
+          const eyeOutlinePoints = rightEyeUpper0.concat(rightEyeLower0, rightEyeUpper1, rightEyeLower1,
+                                                 rightEyeUpper2, rightEyeLower2, rightEyeLower3,
+                                                 leftEyeUpper0, leftEyeLower0, leftEyeUpper1,
+                                                 leftEyeLower1, leftEyeUpper2, leftEyeLower2,
+                                                 leftEyeLower3);
+
+          eyeOutlinePoints.forEach(point => {
+              ctx.beginPath();
+              ctx.rect(point[0], point[1], 2, 2);
+              ctx.fill();
+          });
+      });
+  }
+};
+
+export const drawEyeBrowsOutline = (predictions, ctx, browColor) => {
+  ctx.fillStyle = browColor;
+  if(predictions.length > 0) {
+      predictions.forEach(prediction => {
+          
+        const leftEyeBrowLower = prediction.annotations.leftEyebrowLower;
+        const leftEyeBrowUpper = prediction.annotations.leftEyebrowUpper;
+        const rightEyeBrowLower = prediction.annotations.rightEyebrowLower;
+        const rightEyeBrowUpper = prediction.annotations.rightEyebrowUpper;
+
+          const eyeBrowOutlinePoints = leftEyeBrowLower.concat(leftEyeBrowUpper, rightEyeBrowLower, rightEyeBrowUpper);
+
+          eyeBrowOutlinePoints.forEach(point => {
+              ctx.beginPath();
+              ctx.rect(point[0], point[1], 2, 2);
+              ctx.fill();
+          });
+      });
+  }
+};
