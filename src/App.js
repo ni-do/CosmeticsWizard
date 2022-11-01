@@ -10,7 +10,7 @@
 // Face Mesh - https://github.com/tensorflow/tfjs-models/tree/master/facemesh
 
 import React, { useRef, useEffect, useState } from "react";
-// import BrowSwitcher from "./BrowSwitcher"
+import BrowSwitcher from "./BrowSwitcher"
 import "./App.css";
 import * as tf from "@tensorflow/tfjs";
 // OLD MODEL
@@ -24,7 +24,7 @@ import { drawMesh, drawEyesOutline, drawEyeBrowsOutline } from "./utilities";
 
 function App() {
   const [browColor, setBrowColor] = useState("blue");
-
+  
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
 
@@ -72,7 +72,7 @@ function App() {
       const ctx = canvasRef.current.getContext("2d");
       // requestAnimationFrame(()=>{drawMesh(face, ctx)});
       // requestAnimationFrame(()=>{drawEyesOutline(face, ctx)});
-      requestAnimationFrame(()=>{
+      requestAnimationFrame(() => {
         console.log("Augenbrauen zeichnen in ", browColor)
         drawEyeBrowsOutline(face, ctx, browColor)
       });
@@ -80,17 +80,14 @@ function App() {
   };
 
   useEffect(()=>{runFacemesh()}, []);
-  useEffect(()=>{
-    // setBrowColor
-    console.log("useEffect, brow color:", browColor)
-  }, [browColor]);
+  // useEffect(()=>{
+  //   // setBrowColor
+  //   console.log("useEffect, brow color:", browColor)
+  // }, [browColor]);
 
   return (
     <div className="App">
-      <div>
-        <button onClick={() => setBrowColor("green")}>grün</button>
-        <button onClick={() => setBrowColor("pink")}>pink</button>
-      </div>
+      <BrowSwitcher currentColor={browColor} setBrowColor={setBrowColor} />
       <header className="App-header">
         <Webcam
           ref={webcamRef}
