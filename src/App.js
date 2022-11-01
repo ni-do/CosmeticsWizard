@@ -23,7 +23,7 @@ import { drawMesh, drawEyesOutline, drawEyeBrowsOutline } from "./utilities";
 
 
 function App() {
-  const [browColor, setBrowColor] = useState("blue");
+  const [browColor, setBrowColor] = useState("pink");
   
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
@@ -86,8 +86,29 @@ function App() {
   // }, [browColor]);
 
   return (
-    <div className="App">
-      <BrowSwitcher currentColor={browColor} setBrowColor={setBrowColor} />
+    <div className="App" 
+    style={{
+      backgroundColor: "white",
+    }}>
+      <div style={{display: 'flex', alignItems:'center', justifyContent: 'center'}}>
+        <img style={{
+            marginLeft: "auto",
+            marginRight: "auto",
+            left: 0,
+            right: 0,
+            textAlign: "center",
+          }}
+          src="/assets/ModernMonaLisa_logo.png"/>
+        <img style={{
+            marginLeft: "auto",
+            marginRight: "auto",
+            left: 0,
+            right: 0,
+            width: "30%",
+            textAlign: "center",
+          }} src="/assets/subtitle.png"/>
+      </div>
+      {/* <BrowSwitcher currentColor={browColor} setBrowColor={setBrowColor} /> */}
       <header className="App-header">
         <Webcam
           ref={webcamRef}

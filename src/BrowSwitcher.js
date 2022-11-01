@@ -3,6 +3,7 @@ import React from "react";
 const BrowSwitcher = (props) => {
     return (
       <div>
+        <span>Farbauswahl:</span>
         <fieldset>
             <input type="radio" id="green" name="color" value="green" onClick={() => props.setBrowColor("green")}/>
             <label for="green">Green</label> 
